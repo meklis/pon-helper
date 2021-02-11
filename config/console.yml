@@ -1,0 +1,38 @@
+name: PonHelper CLI
+version: 0.1
+handlers:
+#System
+  - \PonHelper\Console\RoutesListCommand
+
+#User control
+  - \PonHelper\Console\User\AddUserCommand
+  - \PonHelper\Console\User\ListUsersCommand
+  - \PonHelper\Console\User\EditUserCommand
+  - \PonHelper\Console\User\DeleteUserCommand
+  - \PonHelper\Console\User\GenerateUserKeyCommand
+  - \PonHelper\Console\User\AddUserGroupCommand
+  - \PonHelper\Console\User\EditUserGroupCommand
+  - \PonHelper\Console\User\DeleteUserGroupCommand
+  - \PonHelper\Console\User\ListUserGroupCommand
+
+#Device model handlers
+  - \PonHelper\Console\Devices\UpdateModelCommand
+  - \PonHelper\Console\Devices\AddModelCommand
+  - \PonHelper\Console\Devices\ListModelCommand
+  - \PonHelper\Console\Devices\DeleteModelCommand
+
+#Device access handlers
+  - \PonHelper\Console\Devices\UpdateAccessCommand
+  - \PonHelper\Console\Devices\AddAccessCommand
+  - \PonHelper\Console\Devices\ListAccessCommand
+  - \PonHelper\Console\Devices\DeleteAccessCommand
+
+#Device control
+  - \PonHelper\Console\Devices\AddDeviceCommand
+  - \PonHelper\Console\Devices\UpdateDeviceCommand
+  - \PonHelper\Console\Devices\DeleteDeviceCommand
+  - \PonHelper\Console\Devices\ListDeviceCommand
+
+
+
+

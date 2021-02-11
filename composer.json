@@ -1,0 +1,37 @@
+{
+  "name": "meklis/pon-helper",
+  "description": "API interface with database storage for working with network devices",
+  "license": "proprietary",
+  "version": "0.1",
+  "authors": [
+    {
+      "name": "Max Boyar",
+      "email": "max.boyar.a@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PonHelper\\": "src"
+    }
+  },
+  "require": {
+    "meklis/switcher-core": "dev-master",
+    "vlucas/phpdotenv": "^4.1@dev",
+    "php": ">=7.1",
+    "php-di/php-di": "^6.0",
+    "slim/psr7": "^0.5",
+    "slim/slim": "^4.1",
+    "ramsey/uuid": "^4.0@dev",
+    "tuupola/cors-middleware": "dev-master",
+    "zircote/swagger-php": "dev-master",
+    "meklis/ipv4-subnet-calculator": "^3.1",
+    "ext-pdo": "*",
+    "ext-yaml": "*",
+    "ext-json": "*",
+    "php-curl-class/php-curl-class": "dev-master",
+    "adhocore/cli": "dev-main",
+    "symfony/console": "5.x-dev",
+    "khill/php-duration": "~1.0"
+  },
+  "minimum-stability": "dev"
+}

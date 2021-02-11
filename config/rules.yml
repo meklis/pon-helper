@@ -1,0 +1,70 @@
+- key: system_info
+  name: Returned system information
+  routes:
+    - GET:/v1/system/permissions
+
+- key: user_control
+  name: Add, update and delete users
+  routes:
+    - DELETE:/v1/user/{id}
+    - POST:/v1/user
+    - PUT:/v1/user/{id}
+
+- key: user_self_control
+  name: Allow self edit user
+  routes:
+    - GET:/v1/user-self
+    - PUT:/v1/user-self
+
+- key: user_display
+  name: Show users list and user card
+  routes:
+    - GET:/v1/user
+    - GET:/v1/user/{id}
+
+- key: user_group_control
+  name: Add, update and delete user groups
+  routes:
+    - PUT:/v1/user-group/{id}
+    - DELETE:/v1/user-group/{id}
+    - POST:/v1/user-group
+
+- key: user_group_show
+  name: Show user groups
+  routes:
+    - GET:/v1/user-group
+    - GET:/v1/user-group/{id}
+
+- key: device_access_control
+  name: Control accesses for devices
+  routes:
+    - GET:/v1/device-access
+    - GET:/v1/device-access/{id}
+    - POST:/v1/device-access
+    - PUT:/v1/device-access/{id}
+    - DELETE:/v1/device-access/{id}
+
+- key: device_model_control
+  name: Control models for devices
+  routes:
+    - GET:/v1/device-model
+    - GET:/v1/device-model/{id}
+    - POST:/v1/device-model
+    - PUT:/v1/device-model/{id}
+    - DELETE:/v1/device-model/{id}
+
+- key: device_show
+  name: Show devices
+  routes:
+    - GET:/v1/device
+    - GET:/v1/device/{id}
+
+- key: device_control
+  name: Show devices
+  routes:
+    - POST:/v1/device
+    - PUT:/v1/device/{id}
+    - DELETE:/v1/device/{id}
+
+- key: user_self_edit
+  name: Allow self edit user
