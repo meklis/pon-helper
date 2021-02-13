@@ -37,6 +37,9 @@ class EditModelAction extends Action
         if(isset($data['params'])) {
             $Model->setParams($data['params']);
         }
+        if(isset($data['icon'])) {
+            $Model->setParams($data['params']);
+        }
         $Model = $this->storage->update($Model);
         return  $this->respondWithData($Model->getAsArray());
     }

@@ -61,22 +61,23 @@ abstract class AbstractModel implements ModelInterface
         }
         return $props;
     }
-    function getAsArray($object = null) {
+    function getAsArray($object = null, $displayAllProps = false) {
         $return = [];
         if($object === null) {
             $object = $this;
         }
         foreach ($this->getProperties($object) as $propName=>$propValues) {
-            if(isset($propValues['display']) && $propValues['display'] === 'no') {
+            if(!$displayAllProps && isset($propValues['display']) && $propValues['display'] === 'no') {
                 continue;
             }
+            $displayedName = $propName;
             if(isset($propValues['name'])) {
-                $propName = $propValues['name'];
+                $displayedName = $propValues['name'];
             }
             if(is_object($this->$propName) && method_exists($this->$propName, 'getAsArray') ) {
-                $return[$propName] = $this->$propName->getAsArray();
+                $return[$displayedName] = $this->$propName->getAsArray();
             } else {
-                $return[$propName] = $this->$propName;
+                $return[$displayedName] = $this->$propName;
             }
         }
         return $return;

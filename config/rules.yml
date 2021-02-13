@@ -58,6 +58,7 @@
   routes:
     - GET:/v1/device
     - GET:/v1/device/{id}
+    - GET:/v1/device-icon/{id}
 
 - key: device_control
   name: Show devices

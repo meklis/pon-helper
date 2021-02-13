@@ -16,18 +16,21 @@ class DeviceAccess extends AbstractModel
     protected $name;
 
     /**
+     * @prop.display=no
      * @morm
      * @var string
      */
     protected $community;
 
     /**
+     * @prop.display=no
      * @morm
      * @var string
      */
     protected $login;
 
     /**
+     * @prop.display=no
      * @morm
      * @var string
      */

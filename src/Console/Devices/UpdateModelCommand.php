@@ -66,6 +66,7 @@ class UpdateModelCommand extends AbstractCommand
             $model->setParams($props);
         }
         $this->modelStorage->update($model);
+        $model->setIcon('<SETTED>');
         $output->writeln("-------------------------------------");
         $output->writeln($this->toJson($model->getAsArray()));
         $output->writeln("-------------------------------------");

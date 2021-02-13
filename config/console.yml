@@ -20,6 +20,7 @@ handlers:
   - \PonHelper\Console\Devices\AddModelCommand
   - \PonHelper\Console\Devices\ListModelCommand
   - \PonHelper\Console\Devices\DeleteModelCommand
+  - \PonHelper\Console\Devices\ChangeIconModelCommand
 
 #Device access handlers
   - \PonHelper\Console\Devices\UpdateAccessCommand

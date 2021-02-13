@@ -37,6 +37,75 @@ class UserAuthKey extends AbstractModel
      */
     protected $key;
 
+    /**
+     * @morm.name=user_agent
+     * @prop.name=user_agent
+     * @var
+     */
+    protected $userAgent;
+
+
+    /**
+     * @morm.name=remote_addr
+     * @prop.name=remote_addr
+     * @var
+     */
+    protected $remoteAddr;
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     * @return UserAuthKey
+     */
+    public function setUserId(int $user_id): UserAuthKey
+    {
+        $this->user_id = $user_id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
+     * @param mixed $userAgent
+     * @return UserAuthKey
+     */
+    public function setUserAgent($userAgent)
+    {
+        $this->userAgent = $userAgent;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemoteAddr()
+    {
+        return $this->remoteAddr;
+    }
+
+    /**
+     * @param mixed $remoteAddr
+     * @return UserAuthKey
+     */
+    public function setRemoteAddr($remoteAddr)
+    {
+        $this->remoteAddr = $remoteAddr;
+        return $this;
+    }
+
 
     function __construct($id = null)
     {

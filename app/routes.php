@@ -65,6 +65,7 @@ return function (App $app) {
                 $group->put('/{id}', EditModelAction::class);
                 $group->delete('/{id}', DeleteModelAction::class);
             });
+            $group->get('/device-icon/{id}', \PonHelper\Api\Actions\Devices\Models\GetModelIconAction::class);
             $group->group('/device', function (Group $group) {
                 $group->get('', ListDeviceAction::class);
                 $group->get('/{id}', ListDeviceAction::class);

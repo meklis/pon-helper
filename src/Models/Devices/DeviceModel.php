@@ -33,6 +33,36 @@ class DeviceModel extends AbstractModel
      */
     protected $model;
 
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @param string $icon
+     * @return DeviceModel
+     */
+    public function setIcon(string $icon): DeviceModel
+    {
+        $this->icon = $icon;
+        return $this;
+    }
+
+
+    /**
+     * @morm
+     * @var string
+     */
+    protected $icon;
+
+    /**
+     * DeviceModel constructor.
+     * @param null $id
+     */
+
     function __construct($id = null) {
         parent::__construct($id);
         $this->params = App::getInstance()->conf('devices.model_params');

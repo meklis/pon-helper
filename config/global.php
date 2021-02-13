@@ -3,12 +3,19 @@
 use Monolog\Logger;
 
 return [
+    'system' => [
+        'app_name' => _env('')
+    ],
     'api' => [
        'auth' => [
            'key_expired_sec' =>  86400,
            'rules' => yaml_parse_file(__DIR__ . '/rules.yml'),
            'strict_rules' => true,
        ],
+    ],
+    'icons' => [
+        'upload_dir' => __DIR__ . '/../public/upload/icons',
+        'url_prefix' => _env('IMAGE_BASE_URL'),
     ],
     'console' => yaml_parse_file(__DIR__ . '/console.yml'),
     'devices' => [

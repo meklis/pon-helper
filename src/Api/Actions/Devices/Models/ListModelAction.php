@@ -25,12 +25,12 @@ class ListModelAction extends Action
 
         if ($id = $this->request->getAttribute('id')) {
             return $this->respondWithData(
-                $this->storage->getById($id)->getAsArray()
+                $this->storage->getById($id)->getAsArray(null, true)
             );
         }
         $Models = [];
         foreach ($this->storage->fetchAll() as $Model) {
-            $Models[] = $Model->getAsArray();
+            $Models[] = $Model->getAsArray(null, false);
         }
         return  $this->respondWithData($Models);
     }

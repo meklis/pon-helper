@@ -4,7 +4,9 @@
 namespace PonHelper\Console\Devices;
 
 use DI\Annotation\Inject;
+use PonHelper\App;
 use PonHelper\Console\AbstractCommand;
+use PonHelper\Infrastructure\ImgHelper;
 use PonHelper\Models\Devices\DeviceModel;
 use PonHelper\Storage\Devices\DeviceModelStorage;
 use RuntimeException;
@@ -61,7 +63,7 @@ class AddModelCommand extends AbstractCommand
         });
         //Block adding props
         $deviceModel = new DeviceModel();
-        $deviceModel->setVendor($vendor)->setModel($model)->setName($name);
+        $deviceModel->setVendor($vendor)->setModel($model)->setName($name) ;
         if ($this->question->ask($input, $output, new ConfirmationQuestion('Config extra properties (y/n, default: yes)?', true))) {
             $props = [];
             foreach ($deviceModel->getParams() as $key => $value) {
