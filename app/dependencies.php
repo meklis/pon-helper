@@ -6,11 +6,11 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use PonHelper\App;
-use Psr\Log\LoggerInterface;
 
 return function (ContainerBuilder $containerBuilder) {
+    $app = App::getInstance();
     $containerBuilder->addDefinitions([
-        LoggerInterface::class => function () {
+        Monolog\Logger::class => function () {
             $loggerSettings = App::getInstance()->conf('logger');
             $logger = new Logger($loggerSettings['name']);
 

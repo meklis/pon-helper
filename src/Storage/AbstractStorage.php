@@ -6,11 +6,11 @@ namespace PonHelper\Storage;
 
 use Exception;
 use InvalidArgumentException;
+use Monolog\Logger;
 use PDO;
 use PonHelper\App;
 use DI\Annotation\Inject;
 use PonHelper\Storage\Exceptions\RecordNotFoundException;
-use Psr\Log\LoggerInterface;
 use ReflectionClass;
 
 /**
@@ -27,7 +27,7 @@ abstract class AbstractStorage implements StorageInterface
 
     /**
      * @Inject
-     * @var LoggerInterface
+     * @var Logger
      */
     protected $logger;
 

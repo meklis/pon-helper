@@ -8,7 +8,11 @@ use DI\Container;
 use DI\ContainerBuilder;
 use DI\DependencyException;
 use DI\NotFoundException;
+use Monolog\Logger;
 use Slim\Factory\AppFactory;
+use Switcher\Objects\Cache;
+use SwitcherCore\Switcher\CoreConnector;
+use SwitcherCore\Switcher\PhpCache;
 
 class App
 {
@@ -55,9 +59,18 @@ class App
          */
         $container = $containerBuilder->build();
         $container->set(App::class, $app);
+
+        $container->set(CoreConnector::class, function() {
+            $core = new \SwitcherCore\Switcher\CoreConnector(\SwitcherCore\Modules\Helper::getBuildInConfig());
+            $core->setLogger($this->container->get(Logger::class));
+            $core->setCache(new PhpCache());
+        });
         $app->container = $container;
         return $app;
     }
+
+
+
     public function getContainer() {
         return self::$app->container;
     }

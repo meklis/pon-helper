@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace PonHelper\Api\Handlers;
 
+use Monolog\Logger;
 use PonHelper\Api\Actions\ActionError;
 use PonHelper\Api\Actions\ActionPayload;
 use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpForbiddenException;
@@ -25,14 +25,14 @@ class HttpErrorHandler extends SlimErrorHandler
      */
     protected  $displayStackTrace = false;
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     protected $logger;
     public function setDisplayStackTrace($display) {
         $this->displayStackTrace = $display;
         return $this;
     }
-    public function setLogger(LoggerInterface $logger) {
+    public function setLogger(Logger $logger) {
         $this->logger = $logger;
         return $this;
     }

@@ -4,7 +4,6 @@ use PonHelper\Api\Handlers\HttpErrorHandler;
 use PonHelper\Api\Handlers\ShutdownHandler;
 use PonHelper\Api\ResponseEmitter\ResponseEmitter;
 use PonHelper\App;
-use Psr\Log\LoggerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -47,7 +46,7 @@ $request = $serverRequestCreator->createServerRequestFromGlobals();
 $responseFactory = $app->getResponseFactory();
 $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
 $errorHandler->setDisplayStackTrace($container->get('settings')['stackTraceInErrorResponse']);
-$logger = $app->getContainer()->get(LoggerInterface::class);
+$logger = $app->getContainer()->get(\Monolog\Logger::class);
 $errorHandler->setLogger($logger);
 
 // Create Shutdown Handler

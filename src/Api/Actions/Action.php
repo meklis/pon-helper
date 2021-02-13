@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace PonHelper\Api\Actions;
 
+use Monolog\Logger;
 use PonHelper\Api\DomainException\DomainRecordNotFoundException;
 use PonHelper\Storage\Exceptions\RecordNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
 abstract class Action
 {
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     protected $logger;
 
@@ -35,9 +35,9 @@ abstract class Action
 
 
     /**
-     * @param LoggerInterface $logger
+     * @param Logger $logger
      */
-    public function __construct(LoggerInterface $logger )
+    public function __construct(Logger $logger )
     {
         $this->logger = $logger;
     }
