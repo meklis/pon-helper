@@ -26,71 +26,7 @@ class DeviceInterface extends AbstractModel
         parent::__construct($id);
     }
 
-    /**
-     * @morm
-     * @var
-     */
-     protected $index;
 
-    /**
-     * @morm
-     * @var
-     */
-     protected $name;
-
-    /**
-     * @prop.display=no
-     * @morm
-     * @var
-     */
-     protected $device_id;
-
-    /**
-     * @var
-     */
-     protected $device;
-
-    /**
-     * @morm
-     * @var
-     */
-     protected $updated_at;
-
-    /**
-     * @morm
-     * @var
-     */
-     protected $detailed;
-
-    /**
-     * @morm
-     * @var
-     */
-     protected $type;
-
-    /**
-     * @prop.display=no
-     * @morm
-     * @var
-     */
-     protected $parent_id;
-
-    /**
-     * @var DeviceInterface
-     */
-     protected $parent;
-
-    /**
-     * @morm
-     * @var string
-     */
-     protected $status;
-
-    /**
-     * @morm
-     * @var
-     */
-     protected $description;
 
     /**
      * @return DeviceInterface[]
