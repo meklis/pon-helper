@@ -1,8 +1,13 @@
 name: PonHelper CLI
 version: 0.1
 handlers:
+
+#Cron
+  - \PonHelper\Console\Cron\UpdateInterfacesCommand
+
 #System
   - \PonHelper\Console\RoutesListCommand
+  - \PonHelper\Console\RunServerCommand
 
 #User control
   - \PonHelper\Console\User\AddUserCommand

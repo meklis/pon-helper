@@ -240,4 +240,46 @@ abstract class AbstractStorage implements StorageInterface
         }
         return (int)$psth->fetch()['id'];
     }
+
+    function updateOnDuplicate($object) {
+        $fieldsInsert = [];
+        $valuesInsert = [];
+        $valuesUpdate = [];
+        $updateQuery = '';
+        foreach ($this->getSQLFields($object) as $field) {
+            $valueName = $this->getPropertyBySQLname($object, $field);
+            $value = $object->$valueName;
+            if (!$value) continue;
+            if (is_array($value)) {
+                $value = json_encode($value, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
+            }
+            if(is_bool($value)) {
+                $value = $value ? 1 : 0;
+            }
+            $valuesInsert[$field] = $value;
+            $fieldsInsert[$field] = "`$field`";
+            $valuesUpdate[] = $value;
+            $updateQuery .= "`$field` = ?, ";
+        }
+        $updateQuery = trim($updateQuery, ", ");
+        ksort($fieldsInsert);
+        ksort($valuesInsert);
+        $valuesInsert = array_values($valuesInsert);
+        $fieldsInsert = array_values($fieldsInsert);
+
+        $values = array_merge($valuesInsert, $valuesUpdate);
+
+        $mapper = trim(str_repeat("?,", count($fieldsInsert)), ",");
+        $selLine = join(',', $fieldsInsert);
+        $this->logger->debug("INSERT INTO {$this->tableName} ($selLine) VALUES ($mapper) 
+                ON DUPLICATE KEY UPDATE $updateQuery", $values);
+        $psth = $this->pdo->prepare("INSERT INTO {$this->tableName} ($selLine) VALUES ($mapper) 
+                ON DUPLICATE KEY UPDATE $updateQuery");
+
+        $psth->execute($values);
+        if($id = $this->pdo->lastInsertId()) {
+            $object->id = $id;
+        }
+        return $this->fill($object);
+    }
 }

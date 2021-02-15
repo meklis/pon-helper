@@ -9,8 +9,9 @@ use DI\ContainerBuilder;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Monolog\Logger;
+use PonHelper\Models\User\User;
+use PonHelper\Storage\UserStorage;
 use Slim\Factory\AppFactory;
-use Switcher\Objects\Cache;
 use SwitcherCore\Switcher\CoreConnector;
 use SwitcherCore\Switcher\PhpCache;
 
@@ -34,6 +35,7 @@ class App
     {
         $app = new self();
         self::$app = $app;
+
         $app->config =require __DIR__ . '/../config/global.php';
 
         // Instantiate PHP-DI ContainerBuilder
@@ -60,10 +62,11 @@ class App
         $container = $containerBuilder->build();
         $container->set(App::class, $app);
 
-        $container->set(CoreConnector::class, function() {
-            $core = new \SwitcherCore\Switcher\CoreConnector(\SwitcherCore\Modules\Helper::getBuildInConfig());
-            $core->setLogger($this->container->get(Logger::class));
-            $core->setCache(new PhpCache());
+        $container->set(CoreConnector::class, function() use ($container) {
+            $connector = new \SwitcherCore\Switcher\CoreConnector(\SwitcherCore\Modules\Helper::getBuildInConfig());
+            $connector->setLogger($container->get(Logger::class));
+            $connector->setCache(new PhpCache());
+            return $connector;
         });
         $app->container = $container;
         return $app;
@@ -107,5 +110,25 @@ class App
         $routes($app);
         $app->addRoutingMiddleware();
         return $app;
+    }
+
+
+    public function runCommand($command, $arguments = []) {
+        $projDir = realpath(__DIR__ . '/../console');
+        $cmd = sprintf('/usr/bin/php %s', $command);
+        if (count($arguments) > 0) {
+            $cmd = sprintf($cmd . ' %s', implode(' ', $arguments));
+        }
+        exec("$cmd >/dev/null 2>/dev/null &");
+        return $this;
+    }
+
+    /**
+     * @return User
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function getSysUser() {
+        return $this->container->get(UserStorage::class)->getById(-1);
     }
 }

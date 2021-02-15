@@ -54,7 +54,7 @@ class CoreInit
             ->setLogin($dev->getAccess()->getLogin())
             ->setPassword($dev->getAccess()->getPassword());
         if(isset($params['telnet_port'])) {
-            $device->telnetPort = $params['telnet_port'];
+            $device->telnetPort = $params['telnet_port']['value'];
         }
         if(isset($params['mikrotik_api_port'])) {
             $device->mikrotikApiPort = $params['mikrotik_api_port']['value'];
