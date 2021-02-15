@@ -33,7 +33,7 @@ class AuthKeyMiddleware implements Middleware
             throw new HttpUnauthorizedException($request, "Incorrect user token");
         }
         $token = $this->auth->getUserByKey($token);
-        $request = $request->withAttribute('auth_info',$token);
+        $request = $request->withAttribute('AUTH_USER',$token);
         return $handler->handle($request);
     }
 

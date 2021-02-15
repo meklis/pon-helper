@@ -170,7 +170,7 @@ class SwitcherCore
                     'id' => $storage->getId(),
                     'time' => $storage->getTime(),
                 ],
-                '_telnet_output' => '<RETURNED FROM STORE>',
+                '_telnet_output' => null,
             ]
         ];
     }
@@ -215,9 +215,5 @@ class SwitcherCore
                     'stack_trace' => $errorStackTrace,
                 ])
         );
-    }
-    function __construct()
-    {
-        $this->logger = $this->logger->withName('switcher-core-action');
     }
 }

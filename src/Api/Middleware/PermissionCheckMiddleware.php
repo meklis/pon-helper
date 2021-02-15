@@ -20,25 +20,27 @@ class PermissionCheckMiddleware implements Middleware
      */
     public function process(Request $request, RequestHandler $handler): Response
     {
-        $perms = $request->getAttribute('auth_info')->group->permissions;
-        $requestRuleName = $this->getPermissionNameFromRequest($request);
-        if(!$requestRuleName) return  $handler->handle($request);
-        if(in_array($requestRuleName, $perms)) {
-            return   $handler->handle($request);
+        $perms = $request->getAttribute('AUTH_USER')->group->permissions;
+        $requestRuleNames = $this->getPermissionNamesFromRequest($request);
+        if(count(array_intersect($requestRuleNames, $perms)) !== 0) {
+            return  $handler->handle($request);
         }
         throw new HttpForbiddenException($request, "Insufficient rights to access this resource");
     }
-    function getPermissionNameFromRequest(Request $request) {
-        $routeContext = RouteContext::fromRequest($request);
-        $route = $routeContext->getRoute();
-        $pattern = $request->getMethod() . ':' . $route->getPattern();
+    function getPermissionNamesFromRequest(Request $request) {
+
+        $pattern = $request->getMethod() . ':' . $request->getRequestTarget();
+        $names = [];
         foreach ($this->app->conf('api.auth.rules') as $permission) {
             if(!isset($permission['routes'])) continue;
             foreach ($permission['routes'] as $route) {
-                if($route === $pattern) {
-                    return $permission['key'];
+                if(preg_match("#{$route}#", $pattern)) {
+                    $names[] = $permission['key'];
                 }
             }
+        }
+        if($names) {
+            return  $names;
         }
         if($this->app->conf('api.auth.strict_rules')) {
             throw new HttpInternalServerErrorException($request,"Strict rules enabled. Rule not found for route $pattern");

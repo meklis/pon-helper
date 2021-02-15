@@ -1,3 +1,8 @@
+- key: allow_all
+  name: Allow all actions
+  routes:
+    - .*
+
 - key: system_info
   name: Returned system information
   routes:
@@ -6,9 +11,9 @@
 - key: user_control
   name: Add, update and delete users
   routes:
-    - DELETE:/v1/user/{id}
-    - POST:/v1/user
-    - PUT:/v1/user/{id}
+    - DELETE:/v1/user/[0-9]{1,}$
+    - POST:/v1/user$
+    - PUT:/v1/user/[0-9]{1,}$
 
 - key: user_self_control
   name: Allow self edit user
@@ -20,38 +25,38 @@
   name: Show users list and user card
   routes:
     - GET:/v1/user
-    - GET:/v1/user/{id}
+    - GET:/v1/user/[0-9]{1,}$
 
 - key: user_group_control
   name: Add, update and delete user groups
   routes:
-    - PUT:/v1/user-group/{id}
-    - DELETE:/v1/user-group/{id}
+    - PUT:/v1/user-group/[0-9]{1,}$
+    - DELETE:/v1/user-group/[0-9]{1,}$
     - POST:/v1/user-group
 
 - key: user_group_show
   name: Show user groups
   routes:
     - GET:/v1/user-group
-    - GET:/v1/user-group/{id}
+    - GET:/v1/user-group/[0-9]{1,}$
 
 - key: device_access_control
   name: Control accesses for devices
   routes:
     - GET:/v1/device-access
-    - GET:/v1/device-access/{id}
+    - GET:/v1/device-access/[0-9]{1,}$
     - POST:/v1/device-access
-    - PUT:/v1/device-access/{id}
-    - DELETE:/v1/device-access/{id}
+    - PUT:/v1/device-access/[0-9]{1,}$
+    - DELETE:/v1/device-access/[0-9]{1,}$
 
 - key: device_model_control
   name: Control models for devices
   routes:
     - GET:/v1/device-model
-    - GET:/v1/device-model/{id}
+    - GET:/v1/device-model/[0-9]{1,}$
     - POST:/v1/device-model
-    - PUT:/v1/device-model/{id}
-    - DELETE:/v1/device-model/{id}
+    - PUT:/v1/device-model/[0-9]{1,}$
+    - DELETE:/v1/device-model/[0-9]{1,}$
 
 - key: device_show
   name: Show devices
@@ -59,13 +64,15 @@
     - GET:/v1/device
     - GET:/v1/device/{id}
     - GET:/v1/device-icon/{id}
+    - POST:/v1/switcher-core/.*/system/[0-9]{1,}$
+    - GET:/v1/switcher-core/.*/system/[0-9]{1,}$
 
 - key: device_control
   name: Show devices
   routes:
     - POST:/v1/device
-    - PUT:/v1/device/{id}
-    - DELETE:/v1/device/{id}
+    - PUT:/v1/device/[0-9]{1,}$
+    - DELETE:/v1/device/[0-9]{1,}$
 
 - key: user_self_edit
   name: Allow self edit user

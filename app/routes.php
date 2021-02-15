@@ -76,6 +76,7 @@ return function (App $app) {
             $group->group('/system', function (Group  $group) {
                 $group->get('/permissions', PermissionListAction::class);
             });
+            $group->map(['GET', 'POST'], '/switcher-core/{storage}/{module}/{device_id}', \PonHelper\Api\Actions\SwitcherCore\SwitcherCoreAction::class);
         })->add(PermissionCheckMiddleware::class)->add(AuthKeyMiddleware::class);
     });
 
