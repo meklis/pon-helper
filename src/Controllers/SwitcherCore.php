@@ -133,9 +133,17 @@ class SwitcherCore
                     '_telnet_output' => $telnetOutput,
                 ]
             ];
+            $this->storeSystemAction($module, SystemAction::STATUS_SUCCESS, $return);
             $this->logger->info("Return response - ", $return);
             return $return;
         } catch (\Exception $e) {
+            try {
+                $telnetOutput = $core->getContainer()->get(TelnetLazyConnect::class)->getGlobalBuffer();
+            } catch (\Exception $e) {
+                $this->logger->error("Error call module $module", ['arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
+                $telnetOutput = $e->getMessage();
+            }
+            $this->storeSystemAction($module, SystemAction::STATUS_FAILED, ['meta' => ['device' => $this->device, 'user'=>$this->user, '_telnet_output'=>$telnetOutput],'arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
             $this->logger->error("Error call module $module", ['arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
             if ($saveToStorage) {
                 $this->storeFailed($module, $arguments, 'SWITCHER_CORE_ERROR', $e->getMessage(), $e->getTrace());
@@ -156,7 +164,7 @@ class SwitcherCore
     function fromStore($module, $arguments = [])
     {
         $storage = $this->actionStorage->getLastSuccess($this->device, $module, $arguments);
-        return [
+        $return = [
             'data' => $storage->getData(),
             'meta' => [
                 'from_cache' => true,
@@ -173,6 +181,8 @@ class SwitcherCore
                 '_telnet_output' => null,
             ]
         ];
+        $this->storeSystemAction($module, SystemAction::STATUS_SUCCESS, $return);
+        return $return;
     }
 
     protected function storeSystemAction($module, $status, $meta)
@@ -180,7 +190,7 @@ class SwitcherCore
         $this->systemActionStorage->add(
             (new SystemAction())
                 ->setUser($this->user)
-                ->setAction("call-core-module:{$module}")
+                ->setAction("module:{$module}")
                 ->setMeta($meta)
                 ->setStatus($status)
         );
