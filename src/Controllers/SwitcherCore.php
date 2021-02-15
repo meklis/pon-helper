@@ -143,7 +143,7 @@ class SwitcherCore
                 $this->logger->error("Error call module $module", ['arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
                 $telnetOutput = $e->getMessage();
             }
-            $this->storeSystemAction($module, SystemAction::STATUS_FAILED, ['meta' => ['device' => $this->device, 'user'=>$this->user, '_telnet_output'=>$telnetOutput],'arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
+            $this->storeSystemAction($module, SystemAction::STATUS_FAILED, ['meta' => ['arguments'=>$arguments, 'device' => $this->device, 'user'=>$this->user, '_telnet_output'=>$telnetOutput],'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
             $this->logger->error("Error call module $module", ['arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
             if ($saveToStorage) {
                 $this->storeFailed($module, $arguments, 'SWITCHER_CORE_ERROR', $e->getMessage(), $e->getTrace());
@@ -187,11 +187,16 @@ class SwitcherCore
 
     protected function storeSystemAction($module, $status, $meta)
     {
+        $fromCache = "";
+        if(isset($meta['meta']['from_cache']) && $meta['meta']['from_cache']) {
+            $fromCache = " from cache";
+        }
         $this->systemActionStorage->add(
             (new SystemAction())
                 ->setUser($this->user)
                 ->setAction("module:{$module}")
                 ->setMeta($meta)
+                ->setMessage("Called {$module}{$fromCache} for device {$meta['meta']['device']['ip']} with arguments ".json_encode($meta['meta']['arguments']))
                 ->setStatus($status)
         );
         return $this;
@@ -209,6 +214,7 @@ class SwitcherCore
                 ->setData($data)
         );
     }
+
 
     protected function storeFailed($module, $arguments, $errorType, $errorDescription = '', $errorStackTrace = [])
     {

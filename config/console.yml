@@ -2,8 +2,10 @@ name: PonHelper CLI
 version: 0.1
 handlers:
 
+
 #Cron
-  - \PonHelper\Console\Cron\UpdateInterfacesCommand
+  - \PonHelper\Console\SwitcherCore\SwitcherCoreModulesCommand
+  - \PonHelper\Console\SwitcherCore\SwitcherCoreCallModuleCommand
 
 #System
   - \PonHelper\Console\RoutesListCommand

@@ -33,5 +33,11 @@
     "symfony/console": "5.x-dev",
     "khill/php-duration": "~1.0"
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/home/meklis/repos/switcher-core"
+    }
+  ],
   "minimum-stability": "dev"
 }

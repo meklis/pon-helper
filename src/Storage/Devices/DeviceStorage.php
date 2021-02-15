@@ -10,6 +10,7 @@ use PonHelper\Models\Devices\Device;
 use PonHelper\Models\Devices\DeviceAccess;
 use PonHelper\Models\Devices\DeviceModel;
 use PonHelper\Storage\AbstractStorage;
+use PonHelper\Storage\Exceptions\RecordNotFoundException;
 
 /**
  * @method Device fillByArr($object, $fetchArr = [])
@@ -91,5 +92,17 @@ class DeviceStorage extends AbstractStorage
      */
     function getById($id) {
         return $this->getObjectById(Device::class, $id);
+    }
+    /**
+     * @param $ip_address
+     * @return Device
+     */
+    function getByIp($ip_address) {
+        $psth = $this->pdo->prepare("SELECT id FROM devices WHERE ip = ?");
+        $psth->execute([$ip_address]);
+        if($psth->rowCount() === 0) {
+            throw new RecordNotFoundException("Device with ip $ip_address not found in storage");
+        }
+        return $this->getById($psth->fetch()['id']);
     }
 }

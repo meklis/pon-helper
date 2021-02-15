@@ -57,5 +57,4 @@ class SwitcherCoreAction extends Action
             $response['meta']
         );
     }
-
 }
