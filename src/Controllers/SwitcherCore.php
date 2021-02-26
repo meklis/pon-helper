@@ -143,7 +143,7 @@ class SwitcherCore
                 $this->logger->error("Error call module $module", ['arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
                 $telnetOutput = $e->getMessage();
             }
-            $this->storeSystemAction($module, SystemAction::STATUS_FAILED, ['meta' => ['arguments'=>$arguments, 'device' => $this->device, 'user'=>$this->user, '_telnet_output'=>$telnetOutput],'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
+            $this->storeSystemAction($module, SystemAction::STATUS_FAILED, ['meta' => ['arguments'=>$arguments, 'device' => $this->device->getAsArray(), 'user'=>$this->user->getAsArray(), '_telnet_output'=>$telnetOutput],'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
             $this->logger->error("Error call module $module", ['arguments'=>$arguments, 'error'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
             if ($saveToStorage) {
                 $this->storeFailed($module, $arguments, 'SWITCHER_CORE_ERROR', $e->getMessage(), $e->getTrace());

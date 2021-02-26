@@ -110,6 +110,7 @@ abstract class AbstractStorage implements StorageInterface
             if ($this->isJson($v)) {
                 $v = json_decode($v, JSON_PRETTY_PRINT);
             }
+
             $object->$k = $v;
         }
         return $object;
@@ -170,10 +171,10 @@ abstract class AbstractStorage implements StorageInterface
         foreach ($this->getSQLFields($object) as $field) {
             $valueName = $this->getPropertyBySQLname($object, $field);
             $value = $object->$valueName;
-            if (!$value) continue;
             if (is_array($value)) {
                 $value = json_encode($value, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
             }
+            if ($value === null) continue;
             if(is_bool($value)) {
                 $value = $value ? 1 : 0;
             }
@@ -209,7 +210,7 @@ abstract class AbstractStorage implements StorageInterface
             if(is_bool($value)) {
                 $value = $value ? 1 : 0;
             }
-            if (!$value) continue;
+            if ($value === null) continue;
             $values[] = $value;
             $query .= "`$field` = ?, ";
         }
@@ -249,13 +250,13 @@ abstract class AbstractStorage implements StorageInterface
         foreach ($this->getSQLFields($object) as $field) {
             $valueName = $this->getPropertyBySQLname($object, $field);
             $value = $object->$valueName;
-            if (!$value) continue;
             if (is_array($value)) {
                 $value = json_encode($value, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
             }
             if(is_bool($value)) {
                 $value = $value ? 1 : 0;
             }
+            if ($value === null) continue;
             $valuesInsert[$field] = $value;
             $fieldsInsert[$field] = "`$field`";
             $valuesUpdate[] = $value;

@@ -11,7 +11,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "PonHelper\\": "src"
+      "PonHelper\\": "src",
+      "PonHelperModules\\": "modules"
     }
   },
   "require": {
@@ -31,12 +32,17 @@
     "php-curl-class/php-curl-class": "dev-master",
     "adhocore/cli": "dev-main",
     "symfony/console": "5.x-dev",
-    "khill/php-duration": "~1.0"
+    "khill/php-duration": "~1.0",
+    "matomo/device-detector": "dev-master"
   },
   "repositories": [
     {
       "type": "path",
       "url": "/home/meklis/repos/switcher-core"
+    },
+    {
+      "type": "path",
+      "url": "/home/meklis/repos/snmp-wrapper"
     }
   ],
   "minimum-stability": "dev"

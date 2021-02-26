@@ -196,8 +196,8 @@ class User extends AbstractModel
    protected $login;
 
     /**
-     * @var []
+     * @var array
      */
-   protected $authKeys;
+   protected $last_activity;
 
 }

@@ -75,7 +75,19 @@ class HttpErrorHandler extends SlimErrorHandler
 
         $payload = new ActionPayload($statusCode, null, null, $error);
         $encodedPayload = json_encode($payload, JSON_PRETTY_PRINT);
-
+        if(!$encodedPayload) {
+            $encodedPayload = '
+{
+    "statusCode": 500,
+    "meta": null,
+    "error": {
+        "type": "API_CRITICAL_ERROR",
+        "description": "Api critical error",
+        "stackTrace": null
+    }
+}
+';
+        }
         $response = $this->responseFactory->createResponse($statusCode);
         $response->getBody()->write($encodedPayload);
 

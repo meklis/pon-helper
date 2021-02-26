@@ -210,10 +210,10 @@ class SwitcherCoreAction extends AbstractModel
     }
 
     /**
-     * @param array $data
+     * @param mixed $data
      * @return SwitcherCoreAction
      */
-    public function setData(array $data): SwitcherCoreAction
+    public function setData($data): SwitcherCoreAction
     {
         $this->data = $data;
         return $this;

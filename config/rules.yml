@@ -73,6 +73,12 @@
     - POST:/v1/device
     - PUT:/v1/device/[0-9]{1,}$
     - DELETE:/v1/device/[0-9]{1,}$
+    - .*
 
 - key: user_self_edit
   name: Allow self edit user
+
+- key: swc_reboot_onu
+  name: Allow reboot ONUs
+  routes:
+    - GET:/v1/switcher-core/.*/onu_reboot/[0-9]{1,}$

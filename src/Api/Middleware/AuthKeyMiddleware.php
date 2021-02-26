@@ -29,9 +29,14 @@ class AuthKeyMiddleware implements Middleware
         } else {
             throw new HttpBadRequestException($request, "X-Auth-Key header not setted. You must set token for private methods.");
         }
-        if(!$this->auth->isKeyValid($token)) {
-            throw new HttpUnauthorizedException($request, "Incorrect user token");
+        try {
+            if (!$this->auth->isKeyValid($token)) {
+                throw new HttpUnauthorizedException($request, "Incorrect user token");
+            }
+        } catch (\Exception $e) {
+            throw new HttpUnauthorizedException($request,$e->getMessage());
         }
+        $this->auth->updateLastActivity($token);
         $token = $this->auth->getUserByKey($token);
         $request = $request->withAttribute('AUTH_USER',$token);
         return $handler->handle($request);

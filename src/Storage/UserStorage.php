@@ -7,7 +7,6 @@ namespace PonHelper\Storage;
 use DI\Annotation\Inject;
 use InvalidArgumentException;
 use PonHelper\Models\User\User;
-
 class UserStorage extends AbstractStorage
 {
     protected $tableName = 'users';

@@ -7,6 +7,10 @@ use Ramsey\Uuid\Uuid;
 class UserAuthKey extends AbstractModel
 {
 
+    const STATUS_ACTIVE = 'ACTIVE';
+    const STATUS_CLOSED = 'CLOSED';
+    const STATUS_EXPIRED = 'EXPIRED';
+
     /**
      * @prop.display=no
      * @morm.name=user_id
@@ -51,6 +55,81 @@ class UserAuthKey extends AbstractModel
      * @var
      */
     protected $remoteAddr;
+
+    /**
+     * @morm.name=status
+     * @var string
+     */
+    protected $status;
+
+    /**
+     * @prop.name=last_activity
+     * @morm.name=last_activity
+     * @var string
+     */
+    protected $lastActivity;
+
+    /**
+     * @prop.name=device
+     * @morm.name=device_info
+     * @var array
+     */
+    protected $deviceInfo;
+
+    /**
+     * @return array
+     */
+    public function getDeviceInfo(): array
+    {
+        return $this->deviceInfo;
+    }
+
+    /**
+     * @param array $deviceInfo
+     * @return UserAuthKey
+     */
+    public function setDeviceInfo(array $deviceInfo): UserAuthKey
+    {
+        $this->deviceInfo = $deviceInfo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastActivity(): string
+    {
+        return $this->lastActivity;
+    }
+
+    /**
+     * @param string $lastActivity
+     * @return UserAuthKey
+     */
+    public function setLastActivity(string $lastActivity): UserAuthKey
+    {
+        $this->lastActivity = $lastActivity;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @return UserAuthKey
+     */
+    public function setStatus(string $status): UserAuthKey
+    {
+        $this->status = $status;
+        return $this;
+    }
+
 
     /**
      * @return int

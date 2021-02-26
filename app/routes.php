@@ -35,8 +35,10 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
     $app->group('/v1', function (Group $group) {
+        $group->get('/sys/properties', \PonHelper\Api\Actions\System\SystemPropertiesAction::class);
         $group->post('/auth', UserAuthAction::class);
         $group->group('', function (Group $group) {
+            $group->get('/device-dashboard', \PonHelper\Api\Actions\DeviceDashboard\DeviceListAction::class);
             $group->group('/user', function (Group $group) {
                 $group->get('', GetAllUsersAction::class);
                 $group->get('/{id}', GetUserAction::class);

@@ -24,8 +24,20 @@ class Auth
     }
     function isKeyValid(string $key) {
         $key = $this->keyStorage->findByKey($key);
+        if(!$key) {
+            throw new \Exception("Auth key is invalid");
+        }
         $expiredTimeStamp = DateTime::createFromFormat("Y-m-d H:i:s", $key->getExpiredAt())->getTimestamp();
-        return time() < $expiredTimeStamp;
+        return time() < $expiredTimeStamp && $key->getStatus() == UserAuthKey::STATUS_ACTIVE;
+    }
+    function updateLastActivity(string $key) {
+        $key = $this->keyStorage->findByKey($key);
+        if(!$key) {
+            throw new \Exception("Auth key is invalid");
+        }
+        $key->setLastActivity(date("Y-m-d H:i:s"));
+        $this->keyStorage->update($key);
+        return $this;
     }
     function getUserByKey(string  $key) {
         $key = $this->keyStorage->findByKey($key);
@@ -57,6 +69,7 @@ class Auth
                 date("Y-m-d H:i:s", $this->app->conf('api.auth.key_expired_sec') + time())
             );
         }
+        $userKey->setStatus(UserAuthKey::STATUS_ACTIVE);
         return $this->keyStorage->add($userKey);
     }
     /**
